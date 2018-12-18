@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>test</title>
+        <script src="d3/d3.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        
+    </head>
+    <body>
+
+       <div id="title">       
+           test
+       </div>
+       <div id="color">       
+           test
+       </div>
+       
+       
+       <script type="text/javascript">
+           var x = document.getElementById("demo");
+
+           function getLocation() {
+             if (navigator.geolocation) {
+               navigator.geolocation.getCurrentPosition(showPosition);
+               navigator.geolocation.watchPosition(showPosition);               
+             } else { 
+               x.innerHTML = "Geolocation is not supported by this browser.";
+             }
+           }
+
+           function showPosition(position) {
+             var text = "Latitude: " + position.coords.latitude + 
+             "<br>Longitude: " + position.coords.longitude;
+             
+             d3.select("#color").html(text)
+           }
+              
+              
+              getLocation()
+       </script>
+       
+    </body>
+</html>
