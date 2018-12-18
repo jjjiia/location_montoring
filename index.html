@@ -33,13 +33,14 @@
                count+=1
                
              var text = "Latitude: " + position.coords.latitude + 
-             "<br>Longitude: " + position.coords.longitude+" "+count;
+             "<br>Longitude: " + position.coords.longitude+" <br/>count: "+count;
              
              d3.select("#color").html(text)
            }
-              
-              
-              getLocation()
+    getLocation()
+    
+    
+    d3.select("body").style("background-color","pink")
        </script>
        
     </body>
