@@ -19,7 +19,7 @@
        
        <script type="text/javascript">
            var x = document.getElementById("demo");
-
+           var count =1
            function getLocation() {
              if (navigator.geolocation) {
                navigator.geolocation.getCurrentPosition(showPosition);
@@ -30,8 +30,10 @@
            }
 
            function showPosition(position) {
+               count+=1
+               
              var text = "Latitude: " + position.coords.latitude + 
-             "<br>Longitude: " + position.coords.longitude;
+             "<br>Longitude: " + position.coords.longitude+" "+count;
              
              d3.select("#color").html(text)
            }
