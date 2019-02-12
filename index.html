@@ -3,7 +3,9 @@
     <head>
         <meta charset="utf-8">
         <title>test</title>
-        <script src="d3/d3.js"></script>
+        <script src="js/d3.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.serialize-object.js"></script>
         <link rel="stylesheet" type="text/css" href="css/style.css">
         
     </head>
@@ -16,10 +18,37 @@
            test
        </div>
        
+       <div id = "inputform">
+           <form id="test-form">
+  
+             <div>
+               <label>lat</label><br/>
+               <input type="text" name="lat" placeholder="lat"/>
+             </div>
+
+             <div>
+               <label>lng</label><br/>
+               <input type="text" name="lng" placeholder="lng"/>
+             </div>
+  
+             <div>
+               <label>time</label><br/>
+               <input type="text" name="time" placeholder="time"/>
+             </div>
+  
+             
+               <button type="submit"id="submit-form">Submit</button>
+             </div>
+
+           </form>
+       </div>
        
        <script type="text/javascript">
+     
+           
            var x = document.getElementById("demo");
            var count =1
+           
            function getLocation() {
              if (navigator.geolocation) {
                navigator.geolocation.getCurrentPosition(showPosition);
@@ -28,20 +57,64 @@
                x.innerHTML = "Geolocation is not supported by this browser.";
              }
            }
+           var url = 'https://script.google.com/macros/s/AKfycbzNviIp8dQDEjgsyULnMB1rNZsdINdL-qWdR580aqGjet_yRgZ8/exec'
 
            function showPosition(position) {
                count+=1
-               
+               var newDate = new Date();
+               var time = newDate
+
              var text = "Latitude: " + position.coords.latitude + 
-             "<br>Longitude: " + position.coords.longitude+" <br/>count: "+count;
-             
+               "<br>Longitude: " + position.coords.longitude+" <br/>Count: "+count+"<br/>"+String(time);
+    
              d3.select("#color").html(text)
+               
+               var lat = position.coords.latitude
+               var lng = position.coords.longitude
+               
+               var entry = {lat:lat, lng:lng, time:time}
+               //console.log(entry)
+               //e.preventDefault();
+               var jqxhr = $.ajax({
+                 url: url,
+                 method: "GET",
+                 dataType: "json",
+                 data: entry
+               }).success(
+             
+               );
            }
+           
     getLocation()
-    
-    
     d3.select("body").style("background-color","pink")
+           
+           
+           
+       //var $form = $('form#test-form'),
+       //
+       //
+       //  console.log($form)
+       //$('#submit-form').on('click', function(e) {
+       //    //console.log(e)
+       //    //console.log($form.serializeObject())
+       //    
+       //    
+       //  e.preventDefault();
+       //  var jqxhr = $.ajax({
+       //    url: url,
+       //    method: "GET",
+       //    dataType: "json",
+       //    data: $form.serializeObject()
+       //  }).success(
+       //      
+       //  );
+       //}) 
+           
+           
+           
        </script>
+         
+           
        
     </body>
 </html>
