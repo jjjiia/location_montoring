@@ -20,12 +20,7 @@
            test
        </div>
       
-     <div>Country: <span id="country"></span></div>
-        <div>State: <span id="state"></span></div>
-        <div>City: <span id="city"></span></div>
-        <div>Latitude: <span id="latitude"></span></div>
-        <div>Longitude: <span id="longitude"></span></div>
-        <div>IP: <span id="ip"></span></div>
+   
        
        <script type="text/javascript">
      
@@ -48,15 +43,31 @@
                var newDate = new Date();
                var time = newDate
 
-             var text = "Latitude: " + position.coords.latitude + 
-               "<br>Longitude: " + position.coords.longitude+" <br/>Count: "+count+"<br/>"+String(time);
+             
     
-             d3.select("#color").html(text)
-               
                var lat = position.coords.latitude
                var lng = position.coords.longitude
-               
                var entry = {lat:lat, lng:lng, time:time}
+               
+               var getIp = $.getJSON('https://geoip-db.com/json/')
+                        .done (function(location) {
+                            entry["iplng"]=location.longitude
+                            entry["iplat"]=location.latitude
+                        });
+
+                        console.log(entry)
+
+         var text = "Latitude: " + position.coords.latitude + 
+                        "<br>Longitude: " + position.coords.longitude
+                        +" <br/>Count: "+count+"<br/>"
+                        +String(time)+"<br>"
+                        +"ipLat: "+entry["iplat"]+"<br>"
+                        +"ipLng: "+entry["iplng"];
+            
+            
+             d3.select("#color").html(text)
+            
+               
                //console.log(entry)
                //e.preventDefault();
                var jqxhr = $.ajax({
@@ -71,16 +82,6 @@
            
            getLocation()
  
-           
-                   $.getJSON('https://geoip-db.com/json/')
-                            .done (function(location) {
-                               $('#country').html(location.country_name);
-                               $('#state').html(location.state);
-                               $('#city').html(location.city);
-                               $('#latitude').html(location.latitude);
-                               $('#longitude').html(location.longitude);
-                               $('#ip').html(location.IPv4);
-                            });
        </script>
          
            
