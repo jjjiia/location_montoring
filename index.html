@@ -13,19 +13,12 @@
     </head>
     <body>
 
-       <div id="title">       
-           test
-       </div>
-       <div id="color">       
-           test
-       </div>
-      
-     <div>Country: <span id="country"></span></div>
-        <div>State: <span id="state"></span></div>
-        <div>City: <span id="city"></span></div>
-        <div>Latitude: <span id="latitude"></span></div>
-        <div>Longitude: <span id="longitude"></span></div>
-        <div>IP: <span id="ip"></span></div>
+    <div id="title">       
+        collecting location data
+    </div>
+    <div id="data"> </div>
+    <div id="rows"> </div>
+       
        
        <script type="text/javascript">
      
@@ -48,42 +41,40 @@
                var newDate = new Date();
                var time = newDate
 
-             var text = "Latitude: " + position.coords.latitude + 
-               "<br>Longitude: " + position.coords.longitude+" <br/>Count: "+count+"<br/>"+String(time);
+             
     
-             d3.select("#color").html(text)
-               
                var lat = position.coords.latitude
                var lng = position.coords.longitude
-               
                var entry = {lat:lat, lng:lng, time:time}
-               //console.log(entry)
-               //e.preventDefault();
-               var jqxhr = $.ajax({
-                 url: url,
-                 method: "GET",
-                 dataType: "json",
-                 data: entry
-               }).success(
-             
-               );
+               
+               var getIp = $.getJSON('https://geoip-db.com/json/')
+                        .done (function(location) {
+                            entry["iplng"]=location.longitude
+                            entry["iplat"]=location.latitude
+                            entry["ip"]= location.IPv4
+                            
+                            var jqxhr = $.ajax({
+                              url: url,
+                              method: "GET",
+                              dataType: "json",
+                              data: entry
+                            }).success(
+                                function(response){
+                                    d3.select("#rows").html(response.result+" at row "+ response.row)
+                                }
+                            );
+                            
+                            var text = String(time)+"<br><br>"
+                                        +"Latitude: " + position.coords.latitude +"<br/>"
+                                        +"Longitude: " + position.coords.longitude+"<br/>"+"<br/>"                                       
+                                        +"ipLat: "+entry["iplat"]+"<br>"
+                                        +"ipLng: "+entry["iplng"]+"<br>"+"<br/>"
+                                        +"ip address: "+entry["ip"];
+                            d3.select("#data").html(text)
+                        });
            }
-           
            getLocation()
  
-           
-                   $.getJSON('https://geoip-db.com/json/')
-                            .done (function(location) {
-                               $('#country').html(location.country_name);
-                               $('#state').html(location.state);
-                               $('#city').html(location.city);
-                               $('#latitude').html(location.latitude);
-                               $('#longitude').html(location.longitude);
-                               $('#ip').html(location.IPv4);
-                            });
-       </script>
-         
-           
-       
+       </script>      
     </body>
 </html>
