@@ -14,7 +14,8 @@
     <body>
 
     <div id="title">       
-        collecting location data
+        collecting location data from both your IP<br/>
+        and your Browser(wifi signal strength)
     </div>
     <div id="data"> </div>
     <div id="rows"> </div>
@@ -65,11 +66,10 @@
                             );
                             
                             var text = String(time)+"<br><br>"
-                                        +"Latitude: " + position.coords.latitude +"<br/>"
-                                        +"Longitude: " + position.coords.longitude+"<br/>"+"<br/>"                                       
-                                        +"ipLat: "+entry["iplat"]+"<br>"
-                                        +"ipLng: "+entry["iplng"]+"<br>"+"<br/>"
-                                        +"ip address: "+entry["ip"];
+                                        +"Browser: Lat/Lng: " + position.coords.latitude +","+position.coords.longitude
+                                        +"<br/>"+"<br/>"                                       
+                                        +"IP Lat/Lng: "+entry["iplat"]+","+entry["iplng"]+"<br>"+"<br>"
+                                        +"IP address: "+entry["ip"];
                             d3.select("#data").html(text)
                         });
            }
